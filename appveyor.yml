@@ -1,0 +1,23 @@
+configuration: Release
+install:  
+  - cmd: appveyor DownloadFile https://dist.nuget.org/win-x86-commandline/v3.5.0-beta2/NuGet.exe
+  - cmd: nuget install gitlink -SolutionDir %APPVEYOR_BUILD_FOLDER% -Verbosity quiet -ExcludeVersion -pre
+  - cmd: nuget install GitVersion.CommandLine -SolutionDir %APPVEYOR_BUILD_FOLDER% -Verbosity quiet -ExcludeVersion -pre
+
+assembly_info:
+  patch: false
+      
+before_build:
+  
+  - cmd: nuget restore BouncyCastle-PCL.sln
+  - cmd: '.\packages\GitVersion.CommandLine\tools\GitVersion.exe /l console /output buildserver /updateAssemblyInfo'
+  
+build:
+  verbosity: normal
+  parallel: true
+  project: BouncyCastle-PCL.sln
+  
+after_build:
+  - cmd: '.\packages\gitlink\lib\net45\GitLink.exe . -f BouncyCastle-PCL.sln -u https://github.com/onovotny/BouncyCastle-PCL -s %APPVEYOR_REPO_COMMIT% -errorsaswarnings'  
+  - cmd: nuget pack Portable.BouncyCastle.nuspec -version "%GitVersion_NuGetVersion%" -prop "target=%CONFIGURATION%"
+  - ps: 'cmd /c "appveyor PushArtifact Portable.BouncyCastle.%GitVersion_NuGetVersion%.nupkg";if($lastexitcode -ne 0){$lastexitcode = 0}'

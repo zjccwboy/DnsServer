@@ -1,0 +1,15 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Include="..\ARSoft.Tools.Net\**\*.cs" Exclude="..\ARSoft.Tools.Net\bin\**;..\ARSoft.Tools.Net\obj\**;**\*.xproj;packages\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\crypto\crypto.dotnet.csproj" />
+  </ItemGroup>
+
+</Project>

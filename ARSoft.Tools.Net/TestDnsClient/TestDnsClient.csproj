@@ -1,0 +1,13 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>netcoreapp2.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\ARSoft.Tools.Net.Core\ARSoft.Tools.Net.Core.csproj" />
+    <ProjectReference Include="..\crypto\crypto.dotnet.csproj" />
+  </ItemGroup>
+
+</Project>
